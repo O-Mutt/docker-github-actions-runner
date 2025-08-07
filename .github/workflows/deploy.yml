@@ -7,6 +7,7 @@ on:
     branches:
       - master
       - develop
+      - feat/osx
   schedule:
     - cron:  '59 23 * * *'
 
@@ -257,6 +258,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Repo lower
+        run: |
+          echo "REPO_TAG=$(echo '${{ env.ORG }}/github-runner:latest' | awk '{print tolower($0)}')" >> $GITHUB_ENV
+          echo "GHCR_TAG=$(echo 'ghcr.io/${{ github.repository }}:latest' | awk '{print tolower($0)}')" >> $GITHUB_ENV
       - name: Retry build and push
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
         with:
@@ -266,8 +271,8 @@ jobs:
             docker buildx build \
               --file Dockerfile \
               --platform linux/amd64,linux/arm64 \
-              --tag ${{ env.ORG }}/github-runner:latest \
-              --tag ghcr.io/${{ github.repository }}:latest \
+              --tag  $REPO_TAG \
+              --tag  $GHCR_TAG \
               --push \
               --pull \
               --cache-from type=gha \
@@ -305,6 +310,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Repo lower
+        run: |
+          echo "REPO_TAG=$(echo '${{ env.ORG }}/github-runner:ubuntu-${{ matrix.release }}' | awk '{print tolower($0)}')" >> $GITHUB_ENV
+          echo "GHCR_TAG=$(echo 'ghcr.io/${{ github.repository }}:ubuntu-${{ matrix.release }}' | awk '{print tolower($0)}')" >> $GITHUB_ENV
       - name: Retry build and push
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
         with:
@@ -314,8 +323,8 @@ jobs:
             docker buildx build \
               --file Dockerfile.ubuntu-${{ matrix.release }} \
               --platform linux/amd64,linux/arm64 \
-              --tag ${{ env.ORG }}/github-runner:ubuntu-${{ matrix.release }} \
-              --tag ghcr.io/${{ github.repository }}:ubuntu-${{ matrix.release }} \
+              --tag $REPO_TAG \
+              --tag $GHCR_TAG \
               --push \
               --pull \
               --cache-from type=gha \
@@ -353,6 +362,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Repo lower
+        run: |
+          echo "REPO_TAG=$(echo '${{ env.ORG }}/github-runner:debian-${{ matrix.release }}' | awk '{print tolower($0)}')" >> $GITHUB_ENV
+          echo "GHCR_TAG=$(echo 'ghcr.io/${{ github.repository }}:debian-${{ matrix.release }}' | awk '{print tolower($0)}')" >> $GITHUB_ENV
       - name: Retry build and push
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
         with:
@@ -362,8 +375,8 @@ jobs:
             docker buildx build \
               --file Dockerfile.debian-${{ matrix.release }} \
               --platform linux/amd64,linux/arm64 \
-              --tag ${{ env.ORG }}/github-runner:debian-${{ matrix.release }} \
-              --tag ghcr.io/${{ github.repository }}:debian-${{ matrix.release }} \
+              --tag $REPO_TAG \
+              --tag $GHCR_TAG \
               --push \
               --pull \
               --cache-from type=gha \
