@@ -235,7 +235,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        release: [jammy, focal, noble]
+        release: [sonoma14, sonoma15]
         platform: [amd64, arm64]
       fail-fast: false
     steps:
@@ -500,7 +500,7 @@ jobs:
     needs: osx_tests
     strategy:
       matrix:
-        release: [jammy, focal, noble]
+        release: [sonoma14, sonoma15]
       fail-fast: false
     steps:
       - name: Copy Repo Files
