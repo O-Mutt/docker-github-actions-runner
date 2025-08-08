@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 GH_RUNNER_VERSION=$1
-TARGET_OS=${2:-linux}
-TARGETPLATFORM=$3
+TARGETPLATFORM=$2
+TARGET_OS=${3:-linux}
 
 
 export TARGET_ARCH="x64"
