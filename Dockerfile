@@ -15,7 +15,7 @@ WORKDIR /actions-runner
 COPY install_actions.sh /actions-runner
 
 RUN chmod +x /actions-runner/install_actions.sh \
-  && /actions-runner/install_actions.sh ${GH_RUNNER_VERSION} ${TARGET_OS} ${TARGETPLATFORM}  \
+  && /actions-runner/install_actions.sh ${GH_RUNNER_VERSION} ${TARGETPLATFORM} ${TARGET_OS} \
   && rm /actions-runner/install_actions.sh \
   && chown runner /_work /actions-runner /opt/hostedtoolcache
 
