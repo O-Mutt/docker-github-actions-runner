@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - feat/osx
 
 permissions:
   contents: write
