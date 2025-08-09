@@ -360,4 +360,5 @@ jobs:
               --pull \
               --cache-from type=gha \
               --cache-to type=gha,mode=max \
+              --build-arg TARGET_OS=osx \
               .

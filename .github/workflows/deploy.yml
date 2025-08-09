@@ -280,6 +280,7 @@ jobs:
               --pull \
               --cache-from type=gha \
               --cache-to type=gha,mode=max \
+              --build-arg TARGET_OS=osx \
               .
       # Tests will run against the final `${GH_RUNNER_IMAGE}` laid on top of `base-${GH_RUNNER_IMAGE}`
       - name: Run goss tests
@@ -545,4 +546,5 @@ jobs:
               --pull \
               --cache-from type=gha \
               --cache-to type=gha,mode=max \
+              --build-arg TARGET_OS=osx \
               .
